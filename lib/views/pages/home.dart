@@ -88,13 +88,15 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       } else {
+        // Parse the result and update the state
         var jsonResponse =
-            jsonDecode(result);
+            jsonDecode(result); // Assuming result is a JSON string
         setState(() {
           shippingOptions = jsonResponse['rajaongkir']['results'][0]['costs'];
         });
       }
     } catch (e) {
+      // Handle any errors that occur during the shipping calculation
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Error: ${e.toString()}"),
@@ -125,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value:
-                            selectedCourier,
+                            selectedCourier, // Set the value to the selected courier
                         hint: const Text("Pilih Ekspedisi"),
                         isExpanded: true,
                         items: const [
@@ -145,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedCourier =
-                                newValue;
+                                newValue; // Update the selected courier
                           });
                         },
                       ),
@@ -153,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   const SizedBox(
-                      width: 16),
+                      width: 16), // Provide spacing between dropdown and input
                   Expanded(
                     child: TextField(
                       controller: weightController,
@@ -197,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             selectedOriginProvince = newValue;
                             fetchCities(newValue!.provinceId!,
-                                true);
+                                true); // Fetch cities for the selected province
                           });
                         },
                         items: provinces
@@ -267,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             selectedDestinationProvince = newValue;
                             fetchCities(newValue!.provinceId!,
-                                false);
+                                false); // Fetch cities for the selected province
                           });
                         },
                         items: provinces
@@ -312,43 +314,44 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.white,
+                  primary: Colors.blue, // Button color
+                  onPrimary: Colors.white, // Text color
                 ),
                 onPressed: handleCalculateShipping,
                 child: const Text("Hitung Estimasi Harga"),
               ),
             ),
+            // List of service options
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: ListView.builder(
                 shrinkWrap:
-                    true,
+                    true, // Use this to make ListView work in SingleChildScrollView
                 physics:
-                    NeverScrollableScrollPhysics(),
+                    NeverScrollableScrollPhysics(), // to disable ListView's scrolling
                 itemCount:
-                    shippingOptions.length,
+                    shippingOptions.length, // Use the length of shippingOptions
                 itemBuilder: (context, index) {
                   var service = shippingOptions[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(
-                        vertical: 8.0),
-                    elevation: 4.0,
+                        vertical: 8.0), // Vertical margin
+                    elevation: 4.0, // Shadow depth
                     child: ListTile(
                       leading: CircleAvatar(
                         child: Icon(Icons.local_shipping),
                       ),
                       title: Text(
-                          '${service['service']} - ${service['description']}',
+                          '${service['service']} - ${service['description']}', // Display service name and description
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              "Biaya: Rp${service['cost'][0]['value']}"),
+                              "Biaya: Rp${service['cost'][0]['value']}"), // Display cost
                           Text(
-                              "Estimasi Sampai: ${service['cost'][0]['etd']}",
+                              "Estimasi Sampai: ${service['cost'][0]['etd']}", // Display estimated time
                               style: TextStyle(color: Colors.green)),
                         ],
                       ),
