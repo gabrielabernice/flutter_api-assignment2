@@ -17,13 +17,13 @@ class City extends Equatable {
     this.postalCode,
   });
 
-  factory City.fromMap(Map<String, dynamic> data) => City(
-        cityId: data['city_id'] as String?,
-        provinceId: data['province_id'] as String?,
-        province: data['province'] as String?,
-        type: data['type'] as String?,
-        cityName: data['city_name'] as String?,
-        postalCode: data['postal_code'] as String?,
+  factory City.fromMap(Map<String, dynamic> map) => City(
+        cityId: map['city_id'] as String?,
+        provinceId: map['province_id'] as String?,
+        province: map['province'] as String?,
+        type: map['type'] as String?,
+        cityName: map['city_name'] as String?,
+        postalCode: map['postal_code'] as String?,
       );
 
   Map<String, dynamic> toMap() => {

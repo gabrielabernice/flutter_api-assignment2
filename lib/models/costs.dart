@@ -39,3 +39,33 @@ class Costs extends Equatable {
   @override
   List<Object?> get props => [service, description, cost];
 }
+
+class ShippingResponse {
+  final List<Costs>? costs;
+
+  ShippingResponse({this.costs});
+
+  factory ShippingResponse.fromMap(Map<String, dynamic> map) {
+    var results = map['rajaongkir']['results'] as List<dynamic>;
+    var costsList = results.map((e) => Costs.fromMap(e)).toList();
+    return ShippingResponse(costs: costsList);
+  }
+}
+
+class ShippingResult {
+  final ShippingResponse? response;
+  final String? errorMessage;
+
+  ShippingResult._({this.response, this.errorMessage});
+
+  factory ShippingResult.success(ShippingResponse response) {
+    return ShippingResult._(response: response);
+  }
+
+  factory ShippingResult.error(String errorMessage) {
+    return ShippingResult._(errorMessage: errorMessage);
+  }
+
+  bool get isSuccess => response != null;
+  bool get isError => errorMessage != null;
+}
