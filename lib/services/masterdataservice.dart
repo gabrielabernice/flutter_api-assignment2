@@ -7,7 +7,6 @@ class MasterDataService {
           'Content-Type': 'application/json; charset=UTF-8',
           'key': Const.apiKey,
         });
-
     var job = json.decode(response.body);
     List<Province> result = [];
 
@@ -40,7 +39,8 @@ class MasterDataService {
         selectedCities.add(c);
       }
     }
-    
+
     return selectedCities;
+
   }
 }
